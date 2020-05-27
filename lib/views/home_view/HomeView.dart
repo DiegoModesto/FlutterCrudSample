@@ -5,10 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
+  @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+
   @override
   Widget build(BuildContext context) {
-
     final UserProvider users = Provider.of(context);
 
     return Scaffold(
@@ -23,10 +28,14 @@ class HomeView extends StatelessWidget {
           )
         ],
       ),
-      body: ListView.builder(
+      body: users.count != 0 
+      ? ListView.builder(
           itemCount: users.count,
           itemBuilder: (ctx, i) => UserTile(users.byIndex(i)),
         )
+      : Center(
+        child: CircularProgressIndicator(),
+      )
     );
   }
 }
